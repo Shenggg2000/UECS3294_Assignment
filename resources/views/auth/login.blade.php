@@ -2,4 +2,5 @@
 
 @section('content')
   <x-tailwind.login />
+
 @endsection

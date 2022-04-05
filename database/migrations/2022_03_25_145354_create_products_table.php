@@ -18,6 +18,7 @@ return new class extends Migration {
       $table->string('SKU');
       $table->foreignId('product_category_id');
       $table->double('price', 15, 2);
+      $table->integer('stock');
       $table->timestamps();
     });
   }

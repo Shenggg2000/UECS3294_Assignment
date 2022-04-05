@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Pagination\Paginator;
+use App\Models\ProductCategory;
 
 class AppServiceProvider extends ServiceProvider {
   /**
@@ -25,5 +26,7 @@ class AppServiceProvider extends ServiceProvider {
   public function boot() {
     Paginator::useTailwind();
     Schema::defaultStringLength(191);
+
+    //view()->share('categories', ProductCategory::all());
   }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\CartItem;
 
 class LoginController extends Controller {
   /*
@@ -41,5 +42,21 @@ class LoginController extends Controller {
     if ($user->role == 'admin') {
       return redirect('admin/dashboard');
     }
+
+    if(\Session::has('cart'))
+    {
+      $cartItems = session()->get('cart');
+
+      foreach ($cartItems as $cartItem) {
+        $data[] = [
+            'user_id'  => $user->id, 
+            'product_id' => $cartItem['product_id'],
+            'quantity'   => $cartItem['quantity'],
+        ];
+      }
+      CartItem::insert($data);
+      session()->forget('cart');
+    }
+
   }
 }

@@ -27,7 +27,7 @@
             <button type="button" @click="isOpen = !isOpen"
               class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               aria-expanded="false">
-              <span>Shop</span>
+              <span>Groceries</span>
               <!--
               Heroicon name: solid/chevron-down
 
@@ -47,57 +47,8 @@
               class="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
               <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                    <!-- Heroicon name: outline/chart-bar -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Analytics</p>
-                    </div>
-                  </a>
 
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Engagement</p>
-                    </div>
-                  </a>
-
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Security</p>
-                    </div>
-                  </a>
-
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Integrations</p>
-                    </div>
-                  </a>
-
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    <div class="ml-4">
-                      <p class="text-base font-medium text-gray-900">Automations</p>
-                    </div>
-                  </a>
-                  <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+                  <a href="/groceries/all" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
                       viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                       <path stroke-linecap="round" stroke-linejoin="round"
@@ -107,17 +58,33 @@
                       <p class="text-base font-medium text-indigo-600">Shop All</p>
                     </div>
                   </a>
+
+                  {{-- product categories --}}
+                  @foreach ($categories as $category)
+                    <a href="/groceries/{{ strtolower($category->name) }}" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+                      <!-- Heroicon name: outline/chart-bar -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                      </svg>
+                      <div class="ml-4">
+                        <p class="text-base font-medium text-gray-900">{{ $category->name }}</p>
+                      </div>
+                    </a>                    
+                  @endforeach
+                  
                 </div>
               </div>
             </div>
           </div>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Pricing </a>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Docs </a>
+          @if(Auth::guest())
+          <a href="/cart" class="text-base font-medium text-gray-500 hover:text-gray-900"> Cart </a>
+          @endif
         </nav>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           @guest
             @if (Route::has('login'))
-              <a href="login" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Login
+              <a href="{{ url('login') }}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Login
               </a>
             @endif
 
@@ -147,7 +114,7 @@
                 class="absolute z-10 -ml-4 mt-3 transform px-2 sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                 <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                    <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+                    <a href="/cart" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
                       <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -157,7 +124,7 @@
                         <p class="text-base font-medium text-gray-900">Cart</p>
                       </div>
                     </a>
-                    <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+                    <a href="/orders" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
                       <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-6 w-4 text-indigo-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -238,7 +205,7 @@
               @if (Route::has('register'))
                 <p class="mt-6 text-center text-base font-medium text-gray-500">
                   Existing customer?
-                  <a href="login" class="text-indigo-600 hover:text-indigo-500"> Login </a>
+                  <a href="{{ url('login') }}" class="text-indigo-600 hover:text-indigo-500"> Login </a>
                 </p>
               @endif
             @else

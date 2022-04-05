@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\ProductOrder;
 
 class Order extends Model
 {
@@ -20,4 +21,8 @@ class Order extends Model
     public function products() {
       return $this->belongsToMany(Product::class, 'product_order', 'order_id', 'product_id');
     }
+
+    public function productOrders() {
+      return $this->hasMany(ProductOrder::class);
+  }
 }

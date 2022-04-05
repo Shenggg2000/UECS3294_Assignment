@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->double('amount', 15, 2);
-            $table->enum('payment_method', ['Cash on delivery'])->default('Cash on delivery');
+            $table->enum('payment_method',['cash', 'card'])->default('cash');       
             $table->timestamps();
         });
     }

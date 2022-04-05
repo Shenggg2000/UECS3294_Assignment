@@ -18,9 +18,9 @@ class ProductSeeder extends Seeder {
       DB::table('products')->insert([
         'name' => Str::random(15),
         'desc' => Str::random(15),
-        'img' => '',
         'SKU' => Str::random(15),
         'product_category_id' => random_int(1, 12),
+        'stock' => random_int(1, 10),
         'price' => 100,
       ]);
     }
