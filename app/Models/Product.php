@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'SKU', 'category', 'price'];
+    protected $fillable = ['name', 'desc', 'SKU', 'category', 'price', 'stock'];
 
     public function cart_items() {
       return $this->belongsTo(CartItem::class,'id','product_id');

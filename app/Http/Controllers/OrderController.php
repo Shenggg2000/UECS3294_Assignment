@@ -12,8 +12,8 @@ class OrderController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function index() {
-    $products_categories = Order::all();
-    return view('orders.index', ['users' => $products_categories]);
+    $orders = Order::paginate(10);
+    return view('orders.index', ['orders' => $orders]);
   }
 
   /**
@@ -42,7 +42,8 @@ class OrderController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show($id) {
-    //
+    $order = Order::find($id);
+    return view('orders.show', ['order'=>$order]);
   }
 
   /**

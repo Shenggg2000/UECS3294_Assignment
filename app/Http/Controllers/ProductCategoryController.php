@@ -41,6 +41,7 @@ class ProductCategoryController extends Controller {
   public function store(Request $request) {
     $this->validator($request->all())->validate();
     ProductCategory::create($request->all());
+    $request->session()->flash('admin-action-success', 'Product Category Added');
     return redirect('admin/product_categories');
   }
 
@@ -77,6 +78,7 @@ class ProductCategoryController extends Controller {
     $this->validator($request->all())->validate();
     $product_category = ProductCategory::findOrFail($id);
     $product_category->update($request->all());
+    $request->session()->flash('admin-action-success', 'Product Category Updated');
     return redirect('admin/product_categories');
   }
 
@@ -86,8 +88,9 @@ class ProductCategoryController extends Controller {
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id) {
+  public function destroy(Request $request, $id) {
     ProductCategory::findOrFail($id)->delete();
+    $request->session()->flash('admin-action-success', 'Product Category Deleted');
     return redirect('admin/product_categories');
   }
 }

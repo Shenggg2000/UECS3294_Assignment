@@ -22,13 +22,13 @@
                         <div class="col-span-2">
                             @if (!empty($grpOrders))
                                 @foreach ($grpOrders as $index=>$orders)
-                                    <h3 class="text-xl font-medium mt-6 pt-6 border-t">Order  {{ (int)$index+1 }}</h3>
+                                    <h3 class="text-xl font-medium my-6 pt-6 border-t">Order  {{ (int)$index+1 }}</h3>
                                     <div>
                                         @foreach ($orders->productOrders as $order)
                                             <span class="text-right	text-sm font-medium text-gray-400 mr-1">Quantity: {{ $order->quantity }}</span>                                            
                                             @foreach ($order->products as $product)
-                                            <div class="flex items-center">
-                                                <img src="#" width="60" class="rounded-full ">
+                                            <div class="flex items-center mb-3">
+                                                <img src="{{asset("no-picture.jpg")}}" width="60" class="rounded-full ">
                                                 <div class="flex flex-col ml-3"> <span class="md:text-md font-medium">Product Name : {{ $product->name }}</span></div>
                                             </div>
                                             @endforeach

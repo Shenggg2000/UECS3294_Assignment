@@ -49,6 +49,7 @@ class UserController extends Controller {
       'password' => Hash::make($request->password),
       'role' => $request->role,
     ]);
+    $request->session()->flash('admin-action-success', 'User Added');
     return redirect('/admin/users');
   }
 

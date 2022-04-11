@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider {
     Paginator::useTailwind();
     Schema::defaultStringLength(191);
 
-    //view()->share('categories', ProductCategory::all());
+    view()->share('categories', ProductCategory::all());
   }
 }

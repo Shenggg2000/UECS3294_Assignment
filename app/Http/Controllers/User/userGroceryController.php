@@ -27,7 +27,7 @@ class userGroceryController extends Controller
         $categoryOfProducts = ProductCategory::where('name', $request->category)->first();
         $products = Product::where('product_category_id', $categoryOfProducts->id)->paginate(8);
       }
-      return view('groceries',compact('products'));
+      return view('groceries',['products' => $products, 'category' => isset($categoryOfProducts)?$categoryOfProducts->name:""]);
     }
   
     public function productDetail(Request $request) {

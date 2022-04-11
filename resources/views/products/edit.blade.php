@@ -36,8 +36,8 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="grid grid-cols-3 gap-6">
-                    <div class="col-span-3 sm:col-span-2">
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
                       <label for="company-website" class="block text-sm font-medium text-gray-700"> Product Category
                       </label>
                       <div class="mt-1 rounded-md shadow-sm">
@@ -59,8 +59,6 @@
                         </span>
                       @enderror
                     </div>
-                  </div>
-                  <div class="grid grid-cols-2 gap-6">
                     <div>
                       <label for="name" class="block text-sm font-medium text-gray-700">SKU</label>
                       <div class="mt-1 rounded-md shadow-sm">
@@ -69,6 +67,21 @@
                           placeholder="SKU">
                       </div>
                       @error('SKU')
+                        <span class="block text-sm font-medium text-red-500" role="alert">
+                          {{ $message }}
+                        </span>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+                      <div class="mt-1 rounded-md shadow-sm">
+                        <input type="number" name="stock" id="sku" value="{{ $product['stock'] }}"
+                          class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+                          placeholder="Stock">
+                      </div>
+                      @error('stock')
                         <span class="block text-sm font-medium text-red-500" role="alert">
                           {{ $message }}
                         </span>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller {
   protected function validator(array $data) {
@@ -15,6 +16,7 @@ class ProductController extends Controller {
       'product_category_id' =>   ['required'],
       'SKU' => ['required', 'string', 'max:255'],
       'price' => ['required', 'numeric'],
+      'stock' => ['required', 'numeric', 'min:0'],
     ]);
   }
 
@@ -23,15 +25,26 @@ class ProductController extends Controller {
    *
    * @return \Illuminate\Http\Response
    */
-  public function index(Request $request) {
-    $product_categories = ProductCategory::all();
-    if ($request->has('category')) {
-      $category = explode(',', $request->category);
-      $products = Product::whereIn('product_category_id', $category)->paginate(10);
+  public function index(Request $request, $category = null) {
+    if (Gate::allows('isAdmin')) {
+      $product_categories = ProductCategory::all();
+      if ($request->has('category')) {
+        $category = explode(',', $request->category);
+        $products = Product::whereIn('product_category_id', $category)->paginate(10);
+      } else {
+        $products = Product::paginate(10);
+      }
+      return view('products.index', ['products' => $products, 'product_categories' => $product_categories]);
     } else {
-      $products = Product::paginate(10);
+      $product_categories = ProductCategory::all();
+      if ($category != null) {
+        $product_category = ProductCategory::where('name', '=', $category)->firstOrFail();
+        $products = $product_category->products()->paginate(8);
+      } else {
+        $products = Product::paginate(8);
+      }
+      return view('front.products', ['products' => $products, 'category' => isset($product_category)?$product_category->name:""]);
     }
-    return view('products.index', ['products' => $products, 'product_categories' => $product_categories]);
   }
 
   /**
@@ -54,6 +67,7 @@ class ProductController extends Controller {
     $this->validator($request->all())->validate();
     $product_category = ProductCategory::findOrFail($request->product_category_id);
     $product_category->products()->save(new Product($request->all()));
+    $request->session()->flash('admin-action-success', 'Product Added');
     return redirect('admin/products');
   }
 
@@ -65,7 +79,7 @@ class ProductController extends Controller {
    */
   public function show($id) {
     $product = Product::find($id);
-    return view("products.show", ['product' => $product]);
+    return view("front.product-detail", ['product' => $product]);
   }
 
   /**
@@ -93,6 +107,7 @@ class ProductController extends Controller {
     $product_category = ProductCategory::findOrFail($request->product_category_id);
     $product->product_category()->associate($product_category);
     $product->update($request->all());
+    $request->session()->flash('admin-action-success', 'Product Updated');
     return redirect('admin/products');
   }
 
@@ -102,8 +117,9 @@ class ProductController extends Controller {
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id) {
+  public function destroy(Request $request, $id) {
     Product::findOrFail($id)->delete();
+    $request->session()->flash('admin-action-success', 'Product Deleted');
     return redirect('admin/products');
   }
 }
