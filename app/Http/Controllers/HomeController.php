@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller {
   /**
@@ -32,5 +34,20 @@ class HomeController extends Controller {
     return view('dashboard');
   }
 
+  public function profile() {
+    if (Gate::allows('isUser')) {
+      $user = User::find(Auth::id());
+      return view('profile', ["user"=>$user]);
+    } else {
+      return view('home');
+    }
+  }
+
+  public function editProfile(Request $request)
+  {
+    $user = User::find(Auth::id());
+    $user->update($request->all());
+    return redirect('/profile');
+  }
   
 }

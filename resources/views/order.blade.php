@@ -7,7 +7,7 @@
 @section('content')
   <x-tailwind.header/>
 
-    <div class="h-screen bg-gray-300">
+    <div class="min-h-screen bg-gray-300">
         @if(Auth::guest())
             <div class="bg-indigo-100 rounded-lg py-5 px-6 mb-4 text-base text-indigo-700 mb-3" role="alert">
                 You must login to checkout.

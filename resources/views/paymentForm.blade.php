@@ -17,10 +17,23 @@
                 <i class="mdi mdi-credit-card-outline text-3xl"></i>
             </div>
         </div>
-        <div class="mb-10">
-            <h1 class="text-center font-bold text-xl uppercase">Secure payment info</h1>
-        </div>
         <form action="{{ url('/checkout/payment') }}" method="POST">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Delivery Address</label>
+          <div class="mt-1 rounded-md shadow-sm">
+            <input type="text" name="delivery_address" id="sku" value="{{ old('delivery_address') }}"
+              class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+              placeholder="Delivery address">
+          </div>
+          @error('delivery_address')
+            <span class="block text-sm font-medium text-red-500" role="alert">
+              {{ $message }}
+            </span>
+          @enderror
+        </div>
+        <div class="mt-5 mb-2">
+          <label for="name" class="block text-sm font-medium text-gray-700">Secure Payment Info</label>
+        </div>
         <div class="paymentSelection mb-3 flex -mx-2" id="paymentSelection">
             <div class="px-2">
                 <label for="type1" class="text-center flex items-center cursor-pointer ">

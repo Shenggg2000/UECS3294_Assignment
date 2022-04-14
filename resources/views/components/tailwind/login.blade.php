@@ -75,6 +75,7 @@
           </div>
         </div>
       </form>
+      <p class="text-center mt-5">Reminder: Login as Admin with {email:"admin@gmail.com", password: "password"} <br> If fail, you may run UserSeeder again.</p>
     </div>
   </div>
 </div>

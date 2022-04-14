@@ -25,6 +25,8 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile']);
+Route::post('/edit', [App\Http\Controllers\HomeController::class, 'editProfile']);
 
 //grocery product action
 Route::get('/groceries/{category}', [App\Http\Controllers\User\userGroceryController::class, 'groceries']);

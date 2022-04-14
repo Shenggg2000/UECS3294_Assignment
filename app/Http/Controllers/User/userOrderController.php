@@ -28,6 +28,7 @@ class userOrderController extends Controller
             'user_id' => $user->id, 
             'amount' => floatval($request->totalAmount), 
             'payment_method' => $request->paymentType, 
+            'delivery_address' => $request->delivery_address, 
         ]);
 
         $cartItems = CartItem::where('user_id', $user->id)

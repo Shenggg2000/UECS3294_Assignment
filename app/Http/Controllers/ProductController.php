@@ -26,25 +26,14 @@ class ProductController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function index(Request $request, $category = null) {
-    if (Gate::allows('isAdmin')) {
-      $product_categories = ProductCategory::all();
-      if ($request->has('category')) {
-        $category = explode(',', $request->category);
-        $products = Product::whereIn('product_category_id', $category)->paginate(10);
-      } else {
-        $products = Product::paginate(10);
-      }
-      return view('products.index', ['products' => $products, 'product_categories' => $product_categories]);
+    $product_categories = ProductCategory::all();
+    if ($request->has('category')) {
+      $category = explode(',', $request->category);
+      $products = Product::whereIn('product_category_id', $category)->paginate(10);
     } else {
-      $product_categories = ProductCategory::all();
-      if ($category != null) {
-        $product_category = ProductCategory::where('name', '=', $category)->firstOrFail();
-        $products = $product_category->products()->paginate(8);
-      } else {
-        $products = Product::paginate(8);
-      }
-      return view('front.products', ['products' => $products, 'category' => isset($product_category)?$product_category->name:""]);
+      $products = Product::paginate(10);
     }
+    return view('products.index', ['products' => $products, 'product_categories' => $product_categories]);
   }
 
   /**
